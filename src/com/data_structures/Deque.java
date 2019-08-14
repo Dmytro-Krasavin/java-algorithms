@@ -39,7 +39,7 @@ public class Deque<T> {
         T item = values[tailIndex];
         values[tailIndex] = null;
         tailIndex--;
-        if (tailIndex <= 0) {
+        if (tailIndex < 0) {
             tailIndex = values.length - 1;
         }
         return item;
@@ -61,6 +61,7 @@ public class Deque<T> {
         deque.pushFirst(1);
         deque.pushFirst(2);
         deque.pushFirst(3);
+        deque.pushLast(4);
         Integer popFirst = deque.popFirst();
         Integer popFirst1 = deque.popFirst();
         Integer popLast = deque.popLast();
