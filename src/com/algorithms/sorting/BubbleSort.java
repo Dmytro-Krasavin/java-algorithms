@@ -1,4 +1,4 @@
-package com.algorithms.sort;
+package com.algorithms.sorting;
 
 import static com.algorithms.common.ArrayUtils.generateRandomArray;
 import static com.algorithms.common.ArrayUtils.withProfiling;

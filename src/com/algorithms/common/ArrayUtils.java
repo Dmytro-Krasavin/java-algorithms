@@ -3,7 +3,8 @@ package com.algorithms.common;
 import java.util.Arrays;
 import java.util.function.Consumer;
 
-public class ArrayUtils {
+public enum ArrayUtils {
+    ;
 
     public static int[] generateRandomArray(int size, int maxValue) {
         int[] array = new int[size];
