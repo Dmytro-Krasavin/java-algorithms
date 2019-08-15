@@ -1,60 +1,89 @@
 package com.algorithms.search;
 
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
-import static com.algorithms.common.ArrayUtils.*;
+import static com.algorithms.common.ArrayUtils.printWithIndex;
 
-@SuppressWarnings({"WeakerAccess"})
+@SuppressWarnings({"WeakerAccess", "Duplicates"})
 public class BinarySearch {
 
     public static void main(String[] args) {
-        int[] array = generateRandomArray(20, 20);
+//        int[] array = generateRandomArray(20, 5);
+        int[] array = IntStream.range(3, 10).toArray();
+        array[1] = 3;
+        array[2] = 3;
 
         Arrays.sort(array);
         printWithIndex(array);
         System.out.println();
 
-        Integer index = search(array, 8);
+        int firstIndex = findFirstElementIndex(array, 3);
+        int lastIndex = findLastElementIndex(array, 3);
 
-        System.out.println();
-        System.out.println(index != null ? "[" + index + "]=" + array[index] : "Not found");
+        System.out.print("\nFirst: ");
+        System.out.println(firstIndex > -1 ? "[" + firstIndex + "]=" + array[firstIndex] : "Not found");
+        System.out.print("\nLast: ");
+        System.out.println(lastIndex > -1 ? "[" + lastIndex + "]=" + array[lastIndex] : "Not found");
     }
 
-    public static Integer search(int[] array, int item) {
-        int middle;
-        int left = 0;
-        int right = array.length;
+    public static int findFirstElementIndex(int[] array, int element) {
+        int start = -1;
+        int end = array.length + 1;
 
-        while (right - left > 1) {
-            middle = (left + right) / 2;
-            printWithMiddle(array, left, right, middle);
-            if (array[middle] >= item) {
-                right = middle;
+        while (end - start > 1) {
+            int middle = (start + end) / 2;
+            if (array[middle] >= element) {
+                end = middle;
             } else {
-                left = middle;
+                start = middle;
             }
         }
-        if ((right < array.length) && (array[right] == item)) {
-            return right;
+        if ((end < array.length) && (array[end] == element)) {
+            return end;
         }
-        return null;
+        return -1;
     }
 
-    public static Integer searchRecursively(int[] array, int item) {
-        if (array.length < 2) {
-            if (array[0] == item) {
-                return item;
+    public static int findLastElementIndex(int[] array, int element) {
+        int start = 0;
+        int end = array.length - 1;
+
+        while (end - start > 1) {
+            int middle = start + ((end - start) + 1) / 2;
+            if (array[middle] <= element) {
+                start = middle;
+            } else {
+                end = middle - 1;
             }
-            return null;
         }
-        int middleIndex = array.length / 2;
-        int middle = array[middleIndex];
-        if (item > middle) {
-            return searchRecursively(Arrays.copyOfRange(array, middleIndex, array.length), item);
-        } else if (item < middle) {
-            return searchRecursively(Arrays.copyOfRange(array, 0, middleIndex), item);
-        } else {
-            return item;
-        }
+        return (array[end] == element) ? end : -1;
     }
+
+    public static int findFirstElementIndexRecursivelyRecursively(int[] array, int start, int end, int element) {
+        while (start < end) {
+            int mid = start + (end - start) / 2;
+
+            if (array[end] >= element) {
+                return findFirstElementIndexRecursivelyRecursively(array, start, mid, element);
+            } else {
+                return findFirstElementIndexRecursivelyRecursively(array, mid + 1, end, element);
+            }
+        }
+        return (array[start] == element) ? start : -1;
+    }
+
+    public static int findLastElementIndexRecursively(int[] array, int start, int end, int element) {
+        while (start < end) {
+            int middle = start + ((end - start) + 1) / 2;
+
+            if (array[middle] <= element) {
+                return findLastElementIndexRecursively(array, middle, end, element);
+            } else {
+                return findLastElementIndexRecursively(array, start, middle - 1, element);
+            }
+        }
+        return (array[start] == element) ? start : -1;
+    }
+
 }

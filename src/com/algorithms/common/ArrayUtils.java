@@ -30,10 +30,6 @@ public enum ArrayUtils {
         System.out.println(Arrays.toString(array));
     }
 
-    public static void printWithMiddle(int[] array, int left, int right, int middle) {
-        System.out.println(toStringWithMiddle(array, IntStream.range(left, right).toArray(), middle));
-    }
-
     public static void printWithIndex(int[] array) {
         System.out.println(toStringWithIndex(array));
     }
@@ -50,34 +46,6 @@ public enum ArrayUtils {
             b.append(i);
             b.append("]=");
             b.append(array[i]);
-            if (i == iMax)
-                return b.append(']').toString();
-            b.append(", ");
-        }
-    }
-
-    private static String toStringWithMiddle(int[] array, int[] indexArray, int middleIndex) {
-        int iMax = indexArray.length - 1;
-        if (iMax == -1)
-            return "[]";
-
-        StringBuilder b = new StringBuilder();
-        b.append('[');
-        for (int i = 0; ; i++) {
-            if (indexArray[i] == middleIndex) {
-                b.append("<<");
-                b.append("[");
-                b.append(indexArray[i]);
-                b.append("]=");
-                b.append(array[indexArray[i]]);
-                b.append(">>");
-            } else {
-                b.append("[");
-                b.append(indexArray[i]);
-                b.append("]=");
-                b.append(array[indexArray[i]]);
-            }
-
             if (i == iMax)
                 return b.append(']').toString();
             b.append(", ");
