@@ -41,7 +41,12 @@ public class BinarySearch {
     }
 
     public static Integer searchRecursively(int[] array, int item) {
-        if (array.length < 2) return null;
+        if (array.length < 2) {
+            if (array[0] == item) {
+                return item;
+            }
+            return null;
+        }
         int middleIndex = array.length / 2;
         int middle = array[middleIndex];
         if (item > middle) {
