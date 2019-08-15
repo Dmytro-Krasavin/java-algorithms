@@ -30,8 +30,8 @@ public enum ArrayUtils {
         System.out.println(Arrays.toString(array));
     }
 
-    public static void printWithMiddle(int left, int right, int middle) {
-        System.out.println(toStringWithMiddle(IntStream.range(left, right).toArray(), middle));
+    public static void printWithMiddle(int[] array, int left, int right, int middle) {
+        System.out.println(toStringWithMiddle(array, IntStream.range(left, right).toArray(), middle));
     }
 
     public static void printWithIndex(int[] array) {
@@ -56,26 +56,26 @@ public enum ArrayUtils {
         }
     }
 
-    private static String toStringWithMiddle(int[] array, int middleIndex) {
-        int iMax = array.length - 1;
+    private static String toStringWithMiddle(int[] array, int[] indexArray, int middleIndex) {
+        int iMax = indexArray.length - 1;
         if (iMax == -1)
             return "[]";
 
         StringBuilder b = new StringBuilder();
         b.append('[');
         for (int i = 0; ; i++) {
-            if (array[i] == middleIndex) {
+            if (indexArray[i] == middleIndex) {
                 b.append("<<");
                 b.append("[");
-                b.append(i);
+                b.append(indexArray[i]);
                 b.append("]=");
-                b.append(array[i]);
+                b.append(array[indexArray[i]]);
                 b.append(">>");
             } else {
                 b.append("[");
-                b.append(i);
+                b.append(indexArray[i]);
                 b.append("]=");
-                b.append(array[i]);
+                b.append(array[indexArray[i]]);
             }
 
             if (i == iMax)

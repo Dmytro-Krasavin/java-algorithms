@@ -27,7 +27,7 @@ public class BinarySearch {
 
         while (right - left > 1) {
             middle = (left + right) / 2;
-            printWithMiddle(left, right, middle);
+            printWithMiddle(array, left, right, middle);
             if (array[middle] >= item) {
                 right = middle;
             } else {
