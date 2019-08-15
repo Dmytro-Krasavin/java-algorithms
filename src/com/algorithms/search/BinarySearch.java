@@ -60,14 +60,14 @@ public class BinarySearch {
         return (array[end] == element) ? end : -1;
     }
 
-    public static int findFirstElementIndexRecursivelyRecursively(int[] array, int start, int end, int element) {
+    public static int findFirstElementIndexRecursively(int[] array, int start, int end, int element) {
         while (start < end) {
             int mid = start + (end - start) / 2;
 
             if (array[end] >= element) {
-                return findFirstElementIndexRecursivelyRecursively(array, start, mid, element);
+                return findFirstElementIndexRecursively(array, start, mid, element);
             } else {
-                return findFirstElementIndexRecursivelyRecursively(array, mid + 1, end, element);
+                return findFirstElementIndexRecursively(array, mid + 1, end, element);
             }
         }
         return (array[start] == element) ? start : -1;
