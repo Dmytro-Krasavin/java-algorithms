@@ -29,7 +29,7 @@ public class BinarySearch {
 
     public static int findFirstElementIndex(int[] array, int element) {
         int start = -1;
-        int end = array.length + 1;
+        int end = array.length;
 
         while (end - start > 1) {
             int middle = (start + end) / 2;
