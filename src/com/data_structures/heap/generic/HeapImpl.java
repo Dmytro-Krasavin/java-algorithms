@@ -1,75 +1,148 @@
 package com.data_structures.heap.generic;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.UUID;
 
+@SuppressWarnings({"WeakerAccess", "Duplicates"})
 public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 
-    private static final int DEFAULT_INITIAL_CAPACITY = 20;
+    private static final int DEFAULT_INITIAL_CAPACITY = 15;
+    private static final int ROOT_INDEX = 0;
 
     private T[] values;
     private int size;
 
-    public HeapImpl() {
-        this(DEFAULT_INITIAL_CAPACITY);
+    public HeapImpl(Class<T> type) {
+        this(DEFAULT_INITIAL_CAPACITY, type);
     }
 
-    public HeapImpl(int size) {
-        this.values = (T[]) new Object[size];
+    @SuppressWarnings("unchecked")
+    public HeapImpl(int size, Class<T> type) {
+        this.values = (T[]) Array.newInstance(type, size);
     }
 
     @Override
-    public void insert(T element) {
+    public void insert(T node) {
         ensureCapacity();
-        values[size - 1] = element;
-        siftUp(size - 1);
+        int nodeIndex = getLastLeafIndex();
+        values[nodeIndex] = node;
+        siftUp(nodeIndex);
     }
 
     @Override
     public T extractMinimal() {
-        T minimal = peekMinimal();
+        T minimal = peekRoot();
+        int lastLeafIndex = getLastLeafIndex();
+        values[ROOT_INDEX] = values[lastLeafIndex];
+        values[lastLeafIndex] = null;
+        size--;
+        siftDown(ROOT_INDEX);
         return minimal;
     }
 
-    private void siftUp(int nodeIndex) {
-        while (nodeIndex > 1 && isValid(nodeIndex)) {
-            T temp = values[nodeIndex];
-            values[nodeIndex] = values[nodeIndex / 2];
-            values[nodeIndex / 2] = temp;
+    public int size() {
+        return size;
+    }
 
-            nodeIndex = nodeIndex / 2;
+    public void trimToSize() {
+        if (size < values.length) {
+            values = Arrays.copyOf(values, size);
+        }
+    }
+
+    private void siftUp(int nodeIndex) {
+        while (isNotRoot(nodeIndex) && !isParentSatisfied(nodeIndex)) {
+            int parentIndex = getParentIndex(nodeIndex);
+            swapNodes(nodeIndex, parentIndex);
+            nodeIndex = parentIndex;
         }
     }
 
     private void siftDown(int nodeIndex) {
-        while (nodeIndex * 2 <= size) {
-//            if (values[nodeIndex*2])
+        while (getLeftChildIndex(nodeIndex) < size) {
+            int leftChildIndex = getLeftChildIndex(nodeIndex);
+            int rightChildIndex = getRightChildIndex(nodeIndex);
 
+            int min = nodeIndex;
+            if (!isChildSatisfied(min, leftChildIndex)) {
+                min = leftChildIndex;
+            }
+            if (!isChildSatisfied(min, rightChildIndex)) {
+                min = rightChildIndex;
+            }
+
+            if (min == nodeIndex) break;
+            swapNodes(nodeIndex, min);
+            nodeIndex = min;
         }
     }
 
-    private T peekMinimal() {
-        return values[0];
+    private void swapNodes(int firstIndex, int secondIndex) {
+        T temp = values[firstIndex];
+        values[firstIndex] = values[secondIndex];
+        values[secondIndex] = temp;
     }
 
-    private boolean isValid(int nodeIndex) {
-        T element = values[nodeIndex];
-        T parent = values[nodeIndex / 2];
-        return element.compareTo(parent) < 0;
+
+    private boolean isNotRoot(int nodeIndex) {
+        return nodeIndex != ROOT_INDEX;
     }
+
+    private boolean isParentSatisfied(int nodeIndex) {
+        int parentIndex = getParentIndex(nodeIndex);
+        T node = values[nodeIndex];
+        T parent = values[parentIndex];
+        return node.compareTo(parent) >= 0;
+    }
+
+    private boolean isChildSatisfied(int nodeIndex, int childIndex) {
+        T parent = values[nodeIndex];
+        T child = values[childIndex];
+        return childIndex >= size || parent.compareTo(child) <= 0;
+    }
+
+
+    private T peekRoot() {
+        return values[ROOT_INDEX];
+    }
+
+    private int getLastLeafIndex() {
+        return size - 1;
+    }
+
+    private int getParentIndex(int nodeIndex) {
+        return (nodeIndex + 1) / 2 - 1;
+    }
+
+    private int getLeftChildIndex(int nodeIndex) {
+        return nodeIndex * 2 + 1;
+    }
+
+    private int getRightChildIndex(int nodeIndex) {
+        return nodeIndex * 2 + 2;
+    }
+
 
     private void ensureCapacity() {
         size++;
-        if (size > values.length) {
-            int newCapacity = calculateCapacity();
+        int currentCapacity = values.length;
+        if (size > currentCapacity) {
+            int newCapacity = currentCapacity * 2 + 1;
             values = Arrays.copyOf(values, newCapacity);
         }
     }
 
-    private int calculateCapacity() {
-        return (int) (values.length * 1.5);
-    }
-
     public static void main(String[] args) {
+        Heap<UUID> heap = new HeapImpl<>(UUID.class);
 
+        for (int i = 0; i < 10; i++) {
+            heap.insert(UUID.randomUUID());
+        }
+
+        int size = heap.size();
+        for (int i = 0; i < size; i++) {
+            System.out.println(heap.extractMinimal());
+        }
     }
 }

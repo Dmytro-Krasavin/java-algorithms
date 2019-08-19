@@ -6,4 +6,6 @@ public interface Heap<T extends Comparable<T>> {
 
     T extractMinimal();
 
+    int size();
+
 }

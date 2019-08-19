@@ -2,7 +2,8 @@ package com.data_structures.heap.primitive;
 
 import java.util.Arrays;
 
-public class Heap {
+@SuppressWarnings({"WeakerAccess", "Duplicates"})
+public class IntHeap {
 
     private static final int DEFAULT_INITIAL_CAPACITY = 15;
     private static final int ROOT_INDEX = 0;
@@ -10,11 +11,11 @@ public class Heap {
     private int[] values;
     private int size;
 
-    public Heap() {
+    public IntHeap() {
         this(DEFAULT_INITIAL_CAPACITY);
     }
 
-    public Heap(int size) {
+    public IntHeap(int size) {
         this.values = new int[size];
     }
 
@@ -126,7 +127,7 @@ public class Heap {
     }
 
     public static void main(String[] args) {
-        Heap heap = new Heap();
+        IntHeap heap = new IntHeap();
 
         for (int i = 0; i < 10; i++) {
             heap.insert((int) (Math.random() * 100));
