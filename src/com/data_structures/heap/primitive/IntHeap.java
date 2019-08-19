@@ -19,10 +19,10 @@ public class IntHeap {
         this.values = new int[size];
     }
 
-    public void insert(int node) {
+    public void insert(int element) {
         ensureCapacity();
         int nodeIndex = getLastLeafIndex();
-        values[nodeIndex] = node;
+        values[nodeIndex] = element;
         siftUp(nodeIndex);
     }
 
@@ -84,13 +84,13 @@ public class IntHeap {
         return nodeIndex != ROOT_INDEX;
     }
 
-    private boolean isParentSatisfied(int nodeIndex) {
-        int parentIndex = getParentIndex(nodeIndex);
-        return values[nodeIndex] >= values[parentIndex];
+    private boolean isParentSatisfied(int childIndex) {
+        int parentIndex = getParentIndex(childIndex);
+        return isChildSatisfied(parentIndex, childIndex);
     }
 
-    private boolean isChildSatisfied(int nodeIndex, int childIndex) {
-        int parent = values[nodeIndex];
+    private boolean isChildSatisfied(int parentIndex, int childIndex) {
+        int parent = values[parentIndex];
         int child = values[childIndex];
         return childIndex >= size || parent <= child;
     }
@@ -104,16 +104,16 @@ public class IntHeap {
         return size - 1;
     }
 
-    private int getParentIndex(int nodeIndex) {
-        return (nodeIndex + 1) / 2 - 1;
+    private int getParentIndex(int childIndex) {
+        return (childIndex + 1) / 2 - 1;
     }
 
-    private int getLeftChildIndex(int nodeIndex) {
-        return nodeIndex * 2 + 1;
+    private int getLeftChildIndex(int parentIndex) {
+        return parentIndex * 2 + 1;
     }
 
-    private int getRightChildIndex(int nodeIndex) {
-        return nodeIndex * 2 + 2;
+    private int getRightChildIndex(int parentIndex) {
+        return parentIndex * 2 + 2;
     }
 
 
