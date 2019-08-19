@@ -1,16 +1,15 @@
-package com.algorithms.sorting;
+package com.algorithms.sorting.primitive;
 
 import static com.algorithms.common.ArrayUtils.generateRandomArray;
 import static com.algorithms.common.ArrayUtils.withLogging;
 
-public class BubbleSort {
+public class BubbleSort implements SortingAlgorithm {
 
-    public static void main(String[] args) {
-        int[] array = generateRandomArray(10, 100);
-        withLogging(array, BubbleSort::bubbleSort);
-    }
+    @Override
+    public void sort(int[] array) {
+        if (array.length == 0)
+            return;
 
-    public static void bubbleSort(int[] array) {
         for (int i = 0; i < array.length; i++) {
             for (int j = 0; j < array.length - i - 1; j++) {
                 int current = array[j];
@@ -21,5 +20,11 @@ public class BubbleSort {
                 }
             }
         }
+    }
+
+    public static void main(String[] args) {
+        int[] array = generateRandomArray(10, 100);
+        SortingAlgorithm sortingAlgorithm = new BubbleSort();
+        withLogging(array, sortingAlgorithm::sort);
     }
 }

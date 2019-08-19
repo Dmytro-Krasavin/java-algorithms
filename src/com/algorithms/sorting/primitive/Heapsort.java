@@ -1,14 +1,18 @@
-package com.algorithms.sorting;
+package com.algorithms.sorting.primitive;
 
 import com.data_structures.heap.HeapProperty;
 import com.data_structures.heap.primitive.IntHeap;
 
 import static com.algorithms.common.ArrayUtils.generateRandomArray;
-import static com.algorithms.common.ArrayUtils.print;
+import static com.algorithms.common.ArrayUtils.withLogging;
 
-public class Heapsort {
+public class Heapsort implements SortingAlgorithm {
 
-    public static void sort(int[] array) {
+    @Override
+    public void sort(int[] array) {
+        if (array.length == 0)
+            return;
+
         IntHeap heap = new IntHeap(HeapProperty.MAXIMUM, array.length);
         for (int i = array.length - 1; i >= 0; i--) {
             heap.insert(array[i]);
@@ -24,8 +28,7 @@ public class Heapsort {
 
     public static void main(String[] args) {
         int[] array = generateRandomArray(20, 100);
-        print(array);
-        Heapsort.sort(array);
-        print(array);
+        SortingAlgorithm sortingAlgorithm = new Heapsort();
+        withLogging(array, sortingAlgorithm::sort);
     }
 }

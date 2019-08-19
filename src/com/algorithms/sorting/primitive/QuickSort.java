@@ -1,10 +1,11 @@
-package com.algorithms.sorting;
+package com.algorithms.sorting.primitive;
 
 import static com.algorithms.common.ArrayUtils.*;
 
-public class QuickSort {
+public class QuickSort implements SortingAlgorithm {
 
-    public static void sort(int[] array) {
+    @Override
+    public void sort(int[] array) {
         if (array.length == 0)
             return;
 
@@ -42,8 +43,7 @@ public class QuickSort {
 
     public static void main(String[] args) {
         int[] array = generateRandomArray(20, 100);
-        print(array);
-        QuickSort.sort(array);
-        print(array);
+        SortingAlgorithm sortingAlgorithm = new QuickSort();
+        withLogging(array, sortingAlgorithm::sort);
     }
 }

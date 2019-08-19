@@ -25,6 +25,17 @@ public enum ArrayUtils {
         print(array);
     }
 
+    public static void withLogging(Integer[] array, Consumer<Integer[]> sortConsumer) {
+        System.out.println(Arrays.toString(array));
+
+        long start = System.nanoTime();
+        sortConsumer.accept(array);
+        long elapsedTime = System.nanoTime() - start;
+        System.out.println("Elapsed time: " + elapsedTime);
+
+        System.out.println(Arrays.toString(array));
+    }
+
     public static void print(int[] array) {
         System.out.println(Arrays.toString(array));
     }
@@ -53,6 +64,10 @@ public enum ArrayUtils {
         Object t = x[a];
         x[a] = x[b];
         x[b] = t;
+    }
+
+    public static Integer[] toBoxed(int[] array) {
+        return Arrays.stream(array).boxed().toArray(Integer[]::new);
     }
 
     private static String toStringWithIndex(int[] array) {
