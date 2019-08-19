@@ -1,7 +1,7 @@
 package com.data_structures.queue;
 
-import com.data_structures.heap.Heap;
-import com.data_structures.heap.HeapImpl;
+import com.data_structures.heap.generic.Heap;
+import com.data_structures.heap.generic.HeapImpl;
 
 public class PriorityQueue {
 

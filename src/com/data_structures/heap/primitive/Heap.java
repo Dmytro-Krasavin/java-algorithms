@@ -27,7 +27,9 @@ public class Heap {
 
     public int extractMinimal() {
         int minimal = peekRoot();
-        values[ROOT_INDEX] = values[getLastLeafIndex()];
+        int lastLeafIndex = getLastLeafIndex();
+        values[ROOT_INDEX] = values[lastLeafIndex];
+        values[lastLeafIndex] = 0;
         size--;
         siftDown(ROOT_INDEX);
         return minimal;
@@ -57,10 +59,10 @@ public class Heap {
             int rightChildIndex = getRightChildIndex(nodeIndex);
 
             int min = nodeIndex;
-            if (isChildSatisfied(min, leftChildIndex)) {
+            if (!isChildSatisfied(min, leftChildIndex)) {
                 min = leftChildIndex;
             }
-            if (isChildSatisfied(min, rightChildIndex)) {
+            if (!isChildSatisfied(min, rightChildIndex)) {
                 min = rightChildIndex;
             }
 
@@ -87,7 +89,9 @@ public class Heap {
     }
 
     private boolean isChildSatisfied(int nodeIndex, int childIndex) {
-        return childIndex >= size || values[nodeIndex] >= values[childIndex];
+        int parent = values[nodeIndex];
+        int child = values[childIndex];
+        return childIndex >= size || parent <= child;
     }
 
 
@@ -124,21 +128,13 @@ public class Heap {
     public static void main(String[] args) {
         Heap heap = new Heap();
 
-        int[] array = {54, 30, 45, 60, 78, 90, 25, 10, 34, 88, 50, 17};
-
-        for (int element : array) {
-            heap.insert(element);
+        for (int i = 0; i < 10; i++) {
+            heap.insert((int) (Math.random() * 100));
         }
-
-//        for (int i = 0; i < 10; i++) {
-//            heap.insert((int) (Math.random() * 100));
-//        }
 
         int size = heap.size();
         for (int i = 0; i < size; i++) {
             System.out.println(heap.extractMinimal());
         }
-
-        System.out.println();
     }
 }
