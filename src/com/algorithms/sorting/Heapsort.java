@@ -10,8 +10,8 @@ public class Heapsort {
 
     public static void sort(int[] array) {
         IntHeap heap = new IntHeap(HeapProperty.MAXIMUM, array.length);
-        for (int element : array) {
-            heap.insert(element);
+        for (int i = array.length - 1; i >= 0; i--) {
+            heap.insert(array[i]);
         }
 
         int size = heap.size();
