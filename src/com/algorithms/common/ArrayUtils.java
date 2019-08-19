@@ -43,6 +43,18 @@ public enum ArrayUtils {
         return start + (int) Math.round(Math.random() * (end - start));
     }
 
+    public static void swapNodes(int[] x, int a, int b) {
+        int t = x[a];
+        x[a] = x[b];
+        x[b] = t;
+    }
+
+    public static void swapNodes(Object[] x, int a, int b) {
+        Object t = x[a];
+        x[a] = x[b];
+        x[b] = t;
+    }
+
     private static String toStringWithIndex(int[] array) {
         int iMax = array.length - 1;
         if (iMax == -1)

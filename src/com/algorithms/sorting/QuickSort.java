@@ -40,12 +40,6 @@ public class QuickSort {
         }
     }
 
-    private static void swapNodes(int[] array, int firstIndex, int secondIndex) {
-        int temp = array[firstIndex];
-        array[firstIndex] = array[secondIndex];
-        array[secondIndex] = temp;
-    }
-
     public static void main(String[] args) {
         int[] array = generateRandomArray(20, 100);
         print(array);

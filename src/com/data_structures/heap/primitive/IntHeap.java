@@ -5,6 +5,8 @@ import com.data_structures.heap.HeapProperty;
 
 import java.util.Arrays;
 
+import static com.algorithms.common.ArrayUtils.swapNodes;
+
 @SuppressWarnings({"WeakerAccess", "Duplicates"})
 public class IntHeap {
 
@@ -54,7 +56,7 @@ public class IntHeap {
     private void siftUp(int nodeIndex) {
         while (isNotRoot(nodeIndex) && !isParentSatisfied(nodeIndex)) {
             int parentIndex = getParentIndex(nodeIndex);
-            swapNodes(nodeIndex, parentIndex);
+            swapNodes(values, nodeIndex, parentIndex);
             nodeIndex = parentIndex;
         }
     }
@@ -73,15 +75,9 @@ public class IntHeap {
             }
 
             if (min == nodeIndex) break;
-            swapNodes(nodeIndex, min);
+            swapNodes(values, nodeIndex, min);
             nodeIndex = min;
         }
-    }
-
-    private void swapNodes(int firstIndex, int secondIndex) {
-        int temp = values[firstIndex];
-        values[firstIndex] = values[secondIndex];
-        values[secondIndex] = temp;
     }
 
 

@@ -5,6 +5,8 @@ import com.data_structures.heap.HeapProperty;
 import java.util.Arrays;
 import java.util.UUID;
 
+import static com.algorithms.common.ArrayUtils.swapNodes;
+
 @SuppressWarnings({"WeakerAccess", "Duplicates"})
 public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 
@@ -57,7 +59,7 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
     private void siftUp(int nodeIndex) {
         while (isNotRoot(nodeIndex) && !isParentSatisfied(nodeIndex)) {
             int parentIndex = getParentIndex(nodeIndex);
-            swapNodes(nodeIndex, parentIndex);
+            swapNodes(values, nodeIndex, parentIndex);
             nodeIndex = parentIndex;
         }
     }
@@ -76,16 +78,9 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
             }
 
             if (min == nodeIndex) break;
-            swapNodes(nodeIndex, min);
+            swapNodes(values, nodeIndex, min);
             nodeIndex = min;
         }
-    }
-
-    @SuppressWarnings("unchecked")
-    private void swapNodes(int firstIndex, int secondIndex) {
-        T temp = (T) values[firstIndex];
-        values[firstIndex] = values[secondIndex];
-        values[secondIndex] = temp;
     }
 
 
