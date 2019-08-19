@@ -30,7 +30,7 @@ public class IntHeap {
         siftUp(nodeIndex);
     }
 
-    public int extractMinimal() {
+    public int extract() {
         int minimal = peekRoot();
         int lastLeafIndex = getLastLeafIndex();
         values[ROOT_INDEX] = values[lastLeafIndex];
@@ -139,7 +139,7 @@ public class IntHeap {
 
         int size = heap.size();
         for (int i = 0; i < size; i++) {
-            System.out.println(heap.extractMinimal());
+            System.out.println(heap.extract());
         }
     }
 }

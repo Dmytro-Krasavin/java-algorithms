@@ -33,7 +33,7 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
     }
 
     @Override
-    public T extractMinimal() {
+    public T extract() {
         T minimal = peekRoot();
         int lastLeafIndex = getLastLeafIndex();
         values[ROOT_INDEX] = values[lastLeafIndex];
@@ -145,7 +145,7 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 
         int size = heap.size();
         for (int i = 0; i < size; i++) {
-            System.out.println(heap.extractMinimal());
+            System.out.println(heap.extract());
         }
     }
 }

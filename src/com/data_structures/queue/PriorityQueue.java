@@ -22,8 +22,8 @@ public class PriorityQueue<T extends Comparable<T>> {
         heap.insert(element);
     }
 
-    public T extractMinimal() {
-        return heap.extractMinimal();
+    public T extract() {
+        return heap.extract();
     }
 
     public int size() {
@@ -39,7 +39,7 @@ public class PriorityQueue<T extends Comparable<T>> {
 
         int size = queue.size();
         for (int i = 0; i < size; i++) {
-            System.out.println(queue.extractMinimal());
+            System.out.println(queue.extract());
         }
     }
 }
