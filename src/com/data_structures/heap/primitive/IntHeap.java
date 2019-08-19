@@ -1,5 +1,7 @@
 package com.data_structures.heap.primitive;
 
+import com.data_structures.heap.HeapProperty;
+
 import java.util.Arrays;
 
 @SuppressWarnings({"WeakerAccess", "Duplicates"})
@@ -8,14 +10,16 @@ public class IntHeap {
     private static final int DEFAULT_INITIAL_CAPACITY = 15;
     private static final int ROOT_INDEX = 0;
 
+    private final HeapProperty heapProperty;
     private int[] values;
     private int size;
 
-    public IntHeap() {
-        this(DEFAULT_INITIAL_CAPACITY);
+    public IntHeap(HeapProperty heapProperty) {
+        this(heapProperty, DEFAULT_INITIAL_CAPACITY);
     }
 
-    public IntHeap(int size) {
+    public IntHeap(HeapProperty heapProperty, int size) {
+        this.heapProperty = heapProperty;
         this.values = new int[size];
     }
 
@@ -92,7 +96,7 @@ public class IntHeap {
     private boolean isChildSatisfied(int parentIndex, int childIndex) {
         int parent = values[parentIndex];
         int child = values[childIndex];
-        return childIndex >= size || parent <= child;
+        return childIndex >= size || heapProperty.isSatisfied(parent, child);
     }
 
 
@@ -127,7 +131,7 @@ public class IntHeap {
     }
 
     public static void main(String[] args) {
-        IntHeap heap = new IntHeap();
+        IntHeap heap = new IntHeap(HeapProperty.MAXIMUM);
 
         for (int i = 0; i < 10; i++) {
             heap.insert((int) (Math.random() * 100));

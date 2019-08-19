@@ -1,5 +1,6 @@
 package com.data_structures.queue;
 
+import com.data_structures.heap.HeapProperty;
 import com.data_structures.heap.generic.Heap;
 import com.data_structures.heap.generic.HeapImpl;
 
@@ -9,12 +10,12 @@ public class PriorityQueue<T extends Comparable<T>> {
 
     private final Heap<T> heap;
 
-    public PriorityQueue(Class<T> type) {
-        heap = new HeapImpl<>(type);
+    public PriorityQueue(HeapProperty heapProperty) {
+        heap = new HeapImpl<>(heapProperty);
     }
 
-    public PriorityQueue(int size, Class<T> type) {
-        heap = new HeapImpl<>(size, type);
+    public PriorityQueue(HeapProperty heapProperty, int size) {
+        heap = new HeapImpl<>(heapProperty, size);
     }
 
     public void insert(T element) {
@@ -30,7 +31,7 @@ public class PriorityQueue<T extends Comparable<T>> {
     }
 
     public static void main(String[] args) {
-        PriorityQueue<UUID> queue = new PriorityQueue<>(UUID.class);
+        PriorityQueue<UUID> queue = new PriorityQueue<>(HeapProperty.MAXIMUM);
 
         for (int i = 0; i < 10; i++) {
             queue.insert(UUID.randomUUID());

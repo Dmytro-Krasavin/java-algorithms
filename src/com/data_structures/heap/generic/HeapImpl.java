@@ -1,6 +1,7 @@
 package com.data_structures.heap.generic;
 
-import java.lang.reflect.Array;
+import com.data_structures.heap.HeapProperty;
+
 import java.util.Arrays;
 import java.util.UUID;
 
@@ -10,16 +11,17 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
     private static final int DEFAULT_INITIAL_CAPACITY = 15;
     private static final int ROOT_INDEX = 0;
 
-    private T[] values;
+    private final HeapProperty heapProperty;
+    private Object[] values;
     private int size;
 
-    public HeapImpl(Class<T> type) {
-        this(DEFAULT_INITIAL_CAPACITY, type);
+    public HeapImpl(HeapProperty heapProperty) {
+        this(heapProperty, DEFAULT_INITIAL_CAPACITY);
     }
 
-    @SuppressWarnings("unchecked")
-    public HeapImpl(int size, Class<T> type) {
-        this.values = (T[]) Array.newInstance(type, size);
+    public HeapImpl(HeapProperty heapProperty, int size) {
+        this.heapProperty = heapProperty;
+        this.values = new Object[size];
     }
 
     @Override
@@ -79,8 +81,9 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private void swapNodes(int firstIndex, int secondIndex) {
-        T temp = values[firstIndex];
+        T temp = (T) values[firstIndex];
         values[firstIndex] = values[secondIndex];
         values[secondIndex] = temp;
     }
@@ -95,15 +98,16 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
         return isChildSatisfied(parentIndex, childIndex);
     }
 
+    @SuppressWarnings("unchecked")
     private boolean isChildSatisfied(int parentIndex, int childIndex) {
-        T parent = values[parentIndex];
-        T child = values[childIndex];
-        return childIndex >= size || parent.compareTo(child) <= 0;
+        T parent = (T) values[parentIndex];
+        T child = (T) values[childIndex];
+        return childIndex >= size || heapProperty.isSatisfied(parent, child);
     }
 
-
+    @SuppressWarnings("unchecked")
     private T peekRoot() {
-        return values[ROOT_INDEX];
+        return (T) values[ROOT_INDEX];
     }
 
     private int getLastLeafIndex() {
@@ -133,7 +137,7 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
     }
 
     public static void main(String[] args) {
-        Heap<UUID> heap = new HeapImpl<>(UUID.class);
+        Heap<UUID> heap = new HeapImpl<>(HeapProperty.MINIMUM);
 
         for (int i = 0; i < 10; i++) {
             heap.insert(UUID.randomUUID());
