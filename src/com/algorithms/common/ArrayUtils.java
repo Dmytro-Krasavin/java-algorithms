@@ -2,7 +2,6 @@ package com.algorithms.common;
 
 import java.util.Arrays;
 import java.util.function.Consumer;
-import java.util.stream.IntStream;
 
 public enum ArrayUtils {
     ;
@@ -32,6 +31,16 @@ public enum ArrayUtils {
 
     public static void printWithIndex(int[] array) {
         System.out.println(toStringWithIndex(array));
+    }
+
+    public static int getRandomEntry(int[] array) {
+        if (array.length == 0) throw new IllegalArgumentException();
+        int randomIndex = createRandomIntBetween(0, array.length - 1);
+        return array[randomIndex];
+    }
+
+    public static int createRandomIntBetween(int start, int end) {
+        return start + (int) Math.round(Math.random() * (end - start));
     }
 
     private static String toStringWithIndex(int[] array) {
