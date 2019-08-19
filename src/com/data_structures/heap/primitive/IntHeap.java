@@ -1,5 +1,6 @@
 package com.data_structures.heap.primitive;
 
+import com.algorithms.common.ArrayUtils;
 import com.data_structures.heap.HeapProperty;
 
 import java.util.Arrays;
@@ -133,8 +134,9 @@ public class IntHeap {
     public static void main(String[] args) {
         IntHeap heap = new IntHeap(HeapProperty.MAXIMUM);
 
-        for (int i = 0; i < 10; i++) {
-            heap.insert((int) (Math.random() * 100));
+        int[] array = ArrayUtils.generateRandomArray(10, 100);
+        for (int element : array) {
+            heap.insert(element);
         }
 
         int size = heap.size();
