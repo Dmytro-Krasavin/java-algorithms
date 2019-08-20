@@ -45,5 +45,6 @@ public class QuickSort implements SortingAlgorithm {
         int[] array = generateRandomArray(20, 100);
         SortingAlgorithm sortingAlgorithm = new QuickSort();
         withLogging(array, sortingAlgorithm::sort);
+        withStatistics(sortingAlgorithm::sort, 100000, 1000);
     }
 }

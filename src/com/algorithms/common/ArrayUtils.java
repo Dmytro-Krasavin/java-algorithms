@@ -1,6 +1,9 @@
 package com.algorithms.common;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.LongSummaryStatistics;
 import java.util.function.Consumer;
 
 public enum ArrayUtils {
@@ -34,6 +37,43 @@ public enum ArrayUtils {
         System.out.println("Elapsed time: " + elapsedTime);
 
         System.out.println(Arrays.toString(array));
+    }
+
+    public static void withStatistics(Consumer<int[]> sortConsumer, int testCount, int arraySize) {
+        Collection<Long> timeUnits = new ArrayList<>();
+        for (int i = 0; i < testCount; i++) {
+            int[] array = generateRandomArray(arraySize, arraySize);
+            long start = System.nanoTime();
+            sortConsumer.accept(array);
+            timeUnits.add(System.nanoTime() - start);
+        }
+        LongSummaryStatistics statistics = timeUnits.stream()
+                .mapToLong(Long::longValue)
+                .summaryStatistics();
+        double average = statistics.getAverage();
+        long max = statistics.getMax();
+        long min = statistics.getMin();
+        System.out.println("TestCount=" + testCount + "\nArray size=" + arraySize);
+        System.out.println("\nAverage=" + average + "\nMax=" + max + "\nMin=" + min);
+    }
+
+    public static void withStatisticsBoxed(Consumer<Integer[]> sortConsumer, int testCount, int arraySize) {
+        Collection<Long> timeUnits = new ArrayList<>();
+        for (int i = 0; i < testCount; i++) {
+            int[] array = generateRandomArray(arraySize, arraySize);
+            Integer[] boxedArray = toBoxed(array);
+            long start = System.nanoTime();
+            sortConsumer.accept(boxedArray);
+            timeUnits.add(System.nanoTime() - start);
+        }
+        LongSummaryStatistics statistics = timeUnits.stream()
+                .mapToLong(Long::longValue)
+                .summaryStatistics();
+        double average = statistics.getAverage();
+        long max = statistics.getMax();
+        long min = statistics.getMin();
+        System.out.println("TestCount=" + testCount + "\nArray size=" + arraySize);
+        System.out.println("\nAverage=" + average + "\nMax=" + max + "\nMin=" + min);
     }
 
     public static void print(int[] array) {

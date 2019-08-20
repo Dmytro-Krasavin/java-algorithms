@@ -4,7 +4,7 @@ import com.data_structures.heap.HeapProperty;
 import com.data_structures.heap.primitive.IntHeap;
 
 import static com.algorithms.common.ArrayUtils.generateRandomArray;
-import static com.algorithms.common.ArrayUtils.withLogging;
+import static com.algorithms.common.ArrayUtils.withStatistics;
 
 public class Heapsort implements SortingAlgorithm {
 
@@ -29,6 +29,6 @@ public class Heapsort implements SortingAlgorithm {
     public static void main(String[] args) {
         int[] array = generateRandomArray(20, 100);
         SortingAlgorithm sortingAlgorithm = new Heapsort();
-        withLogging(array, sortingAlgorithm::sort);
+        withStatistics(sortingAlgorithm::sort, 100000, 1000);
     }
 }

@@ -26,5 +26,6 @@ public class BubbleSort<T extends Comparable> implements SortingAlgorithm<T> {
         int[] array = generateRandomArray(10, 100);
         SortingAlgorithm<Integer> sortingAlgorithm = new BubbleSort<>();
         withLogging(toBoxed(array), sortingAlgorithm::sort);
+        withStatisticsBoxed(sortingAlgorithm::sort, 100000, 1000);
     }
 }

@@ -1,7 +1,6 @@
 package com.algorithms.sorting.primitive;
 
-import static com.algorithms.common.ArrayUtils.generateRandomArray;
-import static com.algorithms.common.ArrayUtils.withLogging;
+import static com.algorithms.common.ArrayUtils.*;
 
 public class BubbleSort implements SortingAlgorithm {
 
@@ -26,5 +25,6 @@ public class BubbleSort implements SortingAlgorithm {
         int[] array = generateRandomArray(10, 100);
         SortingAlgorithm sortingAlgorithm = new BubbleSort();
         withLogging(array, sortingAlgorithm::sort);
+        withStatistics(sortingAlgorithm::sort, 100000, 1000);
     }
 }
