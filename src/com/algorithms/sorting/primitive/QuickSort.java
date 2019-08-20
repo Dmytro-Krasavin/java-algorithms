@@ -16,14 +16,14 @@ public class QuickSort implements SortingAlgorithm {
         if (start >= end)
             return;
 
-        int x = array[createRandomIntBetween(start, end)];
+        int pivot = array[createRandomIntBetween(start, end)];
         int i = start;
         int j = end;
         while (i < j) {
-            while (array[i] < x) {
+            while (array[i] < pivot) {
                 i++;
             }
-            while (array[j] > x) {
+            while (array[j] > pivot) {
                 j--;
             }
             if (i <= j) {

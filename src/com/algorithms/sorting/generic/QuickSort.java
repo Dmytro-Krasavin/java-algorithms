@@ -17,13 +17,13 @@ public class QuickSort<T extends Comparable> implements SortingAlgorithm<T> {
         if (start >= end)
             return;
 
-        T x = array[createRandomIntBetween(start, end)];
+        T pivot = array[createRandomIntBetween(start, end)];
         int i = start;
         int j = end;
         while (i < j) {
-            while (array[i].compareTo(x) < 0)
+            while (array[i].compareTo(pivot) < 0)
                 i++;
-            while (array[j].compareTo(x) > 0)
+            while (array[j].compareTo(pivot) > 0)
                 j--;
             if (i <= j) {
                 swapNodes(array, i, j);
