@@ -1,31 +1,15 @@
 package com.hackerrank.data_structures.heap;
 
-import java.util.*;
-import java.util.function.BiConsumer;
+import java.util.Scanner;
 
 public class QueryHeap {
-
-    private static final Map<String, BiConsumer<String[], Heap>> queryToHeapAction = Collections.unmodifiableMap(
-            new HashMap<String, BiConsumer<String[], Heap>>(3) {{
-                put("1", (strings, heap) -> {
-                    int value = Integer.parseInt(strings[1]);
-                    heap.insert(value);
-                });
-                put("2", (strings, heap) -> {
-                    int value = Integer.parseInt(strings[1]);
-                    heap.delete(value);
-                });
-                put("3", (strings, heap) -> {
-                    int min = heap.peekMin();
-                    System.out.println(min);
-                });
-            }});
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
         int queriesCount = Integer.parseInt(scanner.nextLine().trim());
         Heap heap = new Heap(queriesCount);
+//        PriorityQueue<Integer> heap = new PriorityQueue<>(queriesCount);
 
         String[] queries = new String[queriesCount];
         for (int i = 0; i < queriesCount; i++) {
@@ -35,8 +19,17 @@ public class QueryHeap {
         for (String query : queries) {
             String[] strings = query.split(" ");
             String queryId = strings[0];
-            BiConsumer<String[], Heap> heapAction = queryToHeapAction.get(queryId);
-            heapAction.accept(strings, heap);
+            switch (queryId) {
+                case "1":
+                    heap.add(Integer.parseInt(strings[1]));
+                    break;
+                case "2":
+                    heap.remove(Integer.parseInt(strings[1]));
+                    break;
+                case "3":
+                    System.out.println(heap.peek());
+                    break;
+            }
         }
     }
 }
@@ -53,17 +46,17 @@ class Heap {
         this.values = new int[size];
     }
 
-    public void insert(int element) {
+    public void add(int element) {
         int lastLeafIndex = ++size - 1;
         values[lastLeafIndex] = element;
         siftUp(lastLeafIndex);
     }
 
-    public int peekMin() {
+    public int peek() {
         return values[ROOT_INDEX];
     }
 
-    public void delete(int value) {
+    public void remove(int value) {
         for (int index = 0; index < size; index++) {
             if (value == values[index]) {
                 int lastLeafIndex = --size;
