@@ -33,14 +33,14 @@ public class FindTheRunningMedian {
             } else {
                 greater.add(element);
             }
-            median = calculateAverage(smaller.element(), greater.element());
+            return calculateAverage(smaller.element(), greater.element());
         } else if (smaller.size() == greater.size()) {
             if (element < median) {
                 smaller.add(element);
-                median = (double) smaller.element();
+                return smaller.element();
             } else {
                 greater.add(element);
-                median = (double) greater.element();
+                return greater.element();
             }
         } else {
             if (element > median) {
@@ -49,9 +49,8 @@ public class FindTheRunningMedian {
             } else {
                 smaller.add(element);
             }
-            median = calculateAverage(smaller.element(), greater.element());
+            return calculateAverage(smaller.element(), greater.element());
         }
-        return median;
     }
 
     private static double calculateAverage(int a, int b) {
